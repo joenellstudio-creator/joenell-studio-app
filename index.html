@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Joenell Studio Lite</title>
+  <link rel="icon" href="data:,">
+  <meta name="description" content="Joenell Studio Lite: edit and develop your photos (RAW and JPEG) right in your browser. By Joenell Studio.">
+  <style>
+    :root { color-scheme: dark; }
+    html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #1c1c1c; }
+    canvas#lightcraft_canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    #lightcraft_loading {
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      color: #b8b8b8; font: 15px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; pointer-events: none;
+    }
+    #lightcraft_status { position: absolute; left: 0; bottom: 0; width: 1px; height: 1px; overflow: hidden; }
+  </style>
+</head>
+<body>
+  <canvas id="lightcraft_canvas"></canvas>
+  <div id="lightcraft_loading">Loading Joenell Studio Lite…</div>
+  <div id="lightcraft_status" aria-live="polite"></div>
+  <script type="module">
+    import init, { start, command } from "./lightcraft_web.js";
+    (async () => {
+      // The Chinese font is a separate file: embedding it would exceed the host's WASM size limit.
+      // Font-free development builds can still run, with the same missing-glyph warning as before.
+      const chineseFont = fetch("./lightcraft_zh_hans.otf")
+        // Some hosts answer a missing file with their HTML page: that is not a font.
+        .then(async response => response.ok && !(response.headers.get("Content-Type") || "").startsWith("text/")
+          ? new Uint8Array(await response.arrayBuffer()) : new Uint8Array())
+        .catch(() => new Uint8Array());
+      // Hosts with a per-file size limit (Cloudflare Pages: 25 MiB) get the module gzipped as
+      // lightcraft_web_bg.wasmz, unpacked here; elsewhere the plain .wasm is used.
+      const wasmResponse = async () => {
+        if (typeof DecompressionStream === "function") {
+          const packed = await fetch("./lightcraft_web_bg.wasmz").catch(() => null);
+          if (packed && packed.ok && packed.body) {
+            const body = packed.body.pipeThrough(new DecompressionStream("gzip"));
+            return new Response(body, { headers: { "Content-Type": "application/wasm" } });
+          }
+        }
+        return fetch("./lightcraft_web_bg.wasm");
+      };
+      // Compile once; the render workers (worker.js) instantiate the same compiled module.
+      const [module, font] = await Promise.all([
+        WebAssembly.compileStreaming(wasmResponse()),
+        chineseFont,
+      ]);
+      globalThis.lightcraftModule = module;
+      await init({ module_or_path: module });
+      // automation: `await lightcraft.command("library.info", "{}")` → JSON text
+      globalThis.lightcraft = { command };
+      start(font);
+    })().catch((e) => {
+      console.error(e);
+      const el = document.getElementById("lightcraft_loading");
+      if (el) el.textContent = "Joenell Studio Lite failed to load: " + e;
+    });
+  </script>
+</body>
+</html>
