@@ -53,6 +53,11 @@ jobs:
           cp -R "$target_dir/web-site/." _site/
           cp LICENSE-MIT LICENSE-APACHE NOTICE _site/
           cp packaging/web/_headers _site/
+          # Cloudflare Pages serves files up to 25 MiB and compresses responses itself: ship the module
+          # gzipped as .wasmz (index.html unpacks it) and drop the precompressed copies.
+          gzip -9 -n -c _site/lightcraft_web_bg.wasm > _site/lightcraft_web_bg.wasmz
+          rm -f _site/lightcraft_web_bg.wasm _site/*.br _site/*.gz
+          printf '\n/*.wasmz\n  Content-Type: application/octet-stream\n' >> _site/_headers
           ls -la _site
           (cd _site && zip -qr9 ../joenell-studio-lite.zip .)
           ls -lh joenell-studio-lite.zip
