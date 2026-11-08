@@ -1,0 +1,68 @@
+# Builds Joenell Studio Lite (the browser version of Joe Light Studio, apps/lightcraft-web) and
+# publishes the static site as joenell-studio-lite.zip on the "web-latest" release. The site is
+# hosted on Cloudflare Pages at https://lite.joenellstudio.com/ (upload the zip's contents).
+name: Web build (Joenell Studio Lite)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "apps/lightcraft-web/**"
+      - "crates/**"
+      - "Cargo.toml"
+      - "Cargo.lock"
+      - "xtask/**"
+      - ".github/workflows/web.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: web-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      CARGO_TERM_COLOR: always
+      CARGO_INCREMENTAL: 0
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - uses: Swatinem/rust-cache@v2
+        with:
+          cache-on-failure: true
+      - name: Install the wasm-bindgen CLI (version pinned in Cargo.lock)
+        run: |
+          v="$(awk '$0 == "name = \"wasm-bindgen\"" { getline; gsub(/version = |"/, ""); print; exit }' Cargo.lock)"
+          test -n "$v"
+          cargo install wasm-bindgen-cli --version "$v" --locked
+      - name: Install binaryen (wasm-opt, smaller download)
+        run: sudo apt-get update && sudo apt-get install -y binaryen
+      - name: Build the browser app
+        run: cargo xtask web
+      - name: Assemble the site
+        run: |
+          target_dir="$(cargo metadata --format-version 1 --no-deps | jq -r .target_directory)"
+          mkdir -p _site
+          cp -R "$target_dir/web-site/." _site/
+          cp LICENSE-MIT LICENSE-APACHE NOTICE _site/
+          cp packaging/web/_headers _site/
+          ls -la _site
+          (cd _site && zip -qr9 ../joenell-studio-lite.zip .)
+          ls -lh joenell-studio-lite.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: joenell-studio-lite
+          path: joenell-studio-lite.zip
+      - name: Publish to the "web-latest" release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view web-latest >/dev/null 2>&1 || gh release create web-latest --title "Joenell Studio Lite (latest web build)" --notes "Static site for https://lite.joenellstudio.com/ built from main. Upload the zip's contents to Cloudflare Pages."
+          gh release upload web-latest joenell-studio-lite.zip --clobber

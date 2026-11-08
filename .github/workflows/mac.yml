@@ -1,0 +1,58 @@
+# Builds Joe Light Studio for Apple Silicon Macs, with Joe Photo Studio bundled inside, and
+# publishes the DMG to the "latest" GitHub release. Ad-hoc signed (no Apple Developer ID yet).
+name: Mac build
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "apps/lightcraft-web/**"
+      - ".github/workflows/web.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: mac-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  mac:
+    runs-on: macos-15
+    timeout-minutes: 240
+    env:
+      CARGO_TERM_COLOR: always
+      CARGO_INCREMENTAL: 0
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-apple-darwin
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: |
+            . -> target
+            photo-studio -> target
+          cache-on-failure: true
+      - name: Build Joe Photo Studio (the Photoshop-style editor)
+        working-directory: photo-studio
+        run: packaging/macos/package.sh --arch aarch64
+      - name: Build Joe Light Studio with Joe Photo Studio inside
+        run: |
+          export PHOTO_STUDIO_APP="$GITHUB_WORKSPACE/photo-studio/target/macos-package/Joe Photo Studio.app"
+          test -d "$PHOTO_STUDIO_APP"
+          packaging/macos/package.sh --arch aarch64
+          ls -la dist/release
+      - uses: actions/upload-artifact@v4
+        with:
+          name: joe-light-studio-macos
+          path: dist/release/joe-light-studio-*.dmg
+      - name: Publish to the "latest" release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          dmg=$(ls dist/release/joe-light-studio-*.dmg)
+          cp "$dmg" dist/release/joe-light-studio-macos-apple-silicon.dmg
+          gh release view latest >/dev/null 2>&1 || gh release create latest --title "Joe Light Studio (latest build)" --notes "Built from main. Apple Silicon Macs. Includes Joe Photo Studio."
+          gh release upload latest dist/release/joe-light-studio-macos-apple-silicon.dmg "$dmg" --clobber
