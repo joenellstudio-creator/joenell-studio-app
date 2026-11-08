@@ -819,6 +819,26 @@ fn install_browser_language() {
     }
 }
 
+/// Whether `bytes` start like a TrueType/OpenType font or font collection.
+fn looks_like_font(bytes: &[u8]) -> bool {
+    matches!(bytes.get(..4), Some([0, 1, 0, 0] | b"OTTO" | b"true" | b"typ1" | b"ttcf"))
+}
+
+#[cfg(test)]
+mod font_check_tests {
+    use super::looks_like_font;
+
+    #[test]
+    fn accepts_fonts_and_rejects_html_fallback_pages() {
+        assert!(looks_like_font(b"OTTO\0\x0b\0\x80"));
+        assert!(looks_like_font(&[0, 1, 0, 0, 0, 0x10]));
+        assert!(looks_like_font(b"ttcf\0\x02\0\0"));
+        assert!(!looks_like_font(b"<!doctype html>"));
+        assert!(!looks_like_font(b"OTT"));
+        assert!(!looks_like_font(&[]));
+    }
+}
+
 /// Start the app with the separately fetched Simplified Chinese font (empty in font-free builds).
 #[wasm_bindgen]
 pub fn start(chinese_font: Vec<u8>) {
@@ -826,6 +846,14 @@ pub fn start(chinese_font: Vec<u8>) {
     safety::install_panic_hook();
     install_browser_language();
     log::info!("lightcraft: wasm instantiated at {:.0} ms", perf_now());
+    // A host can answer a missing font with its HTML fallback page: the font loader panics on
+    // anything that isn't a font, so only real font data gets through.
+    let chinese_font = if chinese_font.is_empty() || looks_like_font(&chinese_font) {
+        chinese_font
+    } else {
+        log::warn!("lightcraft: the Simplified Chinese font download is not a font file; ignoring it");
+        Vec::new()
+    };
     if chinese_font.is_empty() {
         log::warn!("lightcraft: no Simplified Chinese font supplied; Chinese-only glyphs will show as boxes");
     }

@@ -27,7 +27,9 @@
       // The Chinese font is a separate file: embedding it would exceed the host's WASM size limit.
       // Font-free development builds can still run, with the same missing-glyph warning as before.
       const chineseFont = fetch("./lightcraft_zh_hans.otf")
-        .then(async response => response.ok ? new Uint8Array(await response.arrayBuffer()) : new Uint8Array())
+        // Some hosts answer a missing file with their HTML page: that is not a font.
+        .then(async response => response.ok && !(response.headers.get("Content-Type") || "").startsWith("text/")
+          ? new Uint8Array(await response.arrayBuffer()) : new Uint8Array())
         .catch(() => new Uint8Array());
       // Hosts with a per-file size limit (Cloudflare Pages: 25 MiB) get the module gzipped as
       // lightcraft_web_bg.wasmz, unpacked here; elsewhere the plain .wasm is used.

@@ -58,6 +58,9 @@ jobs:
           gzip -9 -n -c _site/lightcraft_web_bg.wasm > _site/lightcraft_web_bg.wasmz
           rm -f _site/lightcraft_web_bg.wasm _site/*.br _site/*.gz
           printf '\n/*.wasmz\n  Content-Type: application/octet-stream\n' >> _site/_headers
+          # Without a 404 page, Pages answers missing files (such as the optional Chinese font) with
+          # index.html and status 200.
+          printf '<!doctype html><meta charset="utf-8"><title>Not found</title><p>Not found. <a href="/">Open Joenell Studio Lite</a></p>\n' > _site/404.html
           ls -la _site
           (cd _site && zip -qr9 ../joenell-studio-lite.zip .)
           ls -lh joenell-studio-lite.zip
