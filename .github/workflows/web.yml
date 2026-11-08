@@ -1,6 +1,6 @@
 # Builds Joenell Studio Lite (the browser version of Joe Light Studio, apps/lightcraft-web) and
-# publishes the static site as joenell-studio-lite.zip on the "web-latest" release. The site is
-# hosted on Cloudflare Pages at https://lite.joenellstudio.com/ (upload the zip's contents).
+# publishes the static site to the `lite-site` branch, which Cloudflare Pages deploys to
+# https://lite.joenellstudio.com/. The same site is also attached to the "web-latest" release as a zip.
 name: Web build (Joenell Studio Lite)
 
 on:
@@ -66,3 +66,14 @@ jobs:
         run: |
           gh release view web-latest >/dev/null 2>&1 || gh release create web-latest --title "Joenell Studio Lite (latest web build)" --notes "Static site for https://lite.joenellstudio.com/ built from main. Upload the zip's contents to Cloudflare Pages."
           gh release upload web-latest joenell-studio-lite.zip --clobber
+      - name: Publish the site to the lite-site branch (Cloudflare Pages deploys it)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cd _site
+          git init -q -b lite-site
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -qm "Joenell Studio Lite build ${GITHUB_SHA::7}"
+          git push -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" lite-site

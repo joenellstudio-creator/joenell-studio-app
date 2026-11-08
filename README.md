@@ -20,7 +20,7 @@ Builds are not yet signed with an Apple Developer ID, so macOS may warn the firs
 
 The Library & Develop app also runs in the browser as **Joenell Studio Lite** at
 https://lite.joenellstudio.com/ (no install; photos stay in the browser's own storage).
-`.github/workflows/web.yml` builds it (`cargo xtask web`) and publishes the site (`joenell-studio-lite.zip` on the `web-latest` release, hosted on Cloudflare Pages) on every
+`.github/workflows/web.yml` builds it (`cargo xtask web`) and publishes the site to the `lite-site` branch (deployed by Cloudflare Pages; also a zip on the `web-latest` release) on every
 push to `main` that touches the app.
 
 ## Building
