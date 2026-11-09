@@ -30,7 +30,7 @@ jobs:
       CARGO_TERM_COLOR: always
       CARGO_INCREMENTAL: 0
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@stable
         with:
           targets: wasm32-unknown-unknown
@@ -64,7 +64,7 @@ jobs:
           ls -la _site
           (cd _site && zip -qr9 ../joenell-studio-lite.zip .)
           ls -lh joenell-studio-lite.zip
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: joenell-studio-lite
           path: joenell-studio-lite.zip

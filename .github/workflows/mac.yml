@@ -25,7 +25,7 @@ jobs:
       CARGO_TERM_COLOR: always
       CARGO_INCREMENTAL: 0
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@stable
         with:
           targets: aarch64-apple-darwin
@@ -44,7 +44,7 @@ jobs:
           test -d "$PHOTO_STUDIO_APP"
           packaging/macos/package.sh --arch aarch64
           ls -la dist/release
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: joe-light-studio-macos
           path: dist/release/joe-light-studio-*.dmg
