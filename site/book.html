@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Request a booking · Joenell Studio</title>
+<meta name="description" content="Request a vetted Vancouver wedding or elopement photographer for your date. Replies within 48 hours, no booking fee.">
+<link rel="canonical" href="https://joenellstudio.com/book">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Joenell Studio">
+<meta property="og:title" content="Request a booking · Joenell Studio"><meta property="og:description" content="Request a vetted Vancouver wedding or elopement photographer for your date. Replies within 48 hours, no booking fee.">
+<meta property="og:url" content="https://joenellstudio.com/book"><meta property="og:image" content="https://joenellstudio.com/images/jh-lookout.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#fbf8f3">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Jost:wght@300;400;500&family=Pinyon+Script&display=swap">
+<link rel="stylesheet" href="/assets/site.css?v=20261114a">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site"><div class="wrap">
+  <a class="logo" href="/" aria-label="Joenell Studio home"><b>JOENELL</b><span>Studio · Vancouver</span></a>
+  <nav class="main" id="nav"><a href="/photographers">Find a photographer</a><a href="/packages">Packages</a><a href="/how-it-works">How it works</a><a href="/join">For photographers</a><a class="btn" href="/book">Request a booking</a></nav>
+  <button class="menu-btn" aria-controls="nav" aria-expanded="false" aria-label="Menu">☰</button>
+</div></header>
+<main id="main">
+
+<section class="phead"><div class="wrap center"><p class="eyebrow">Request a booking</p><h1>Tell us about your day</h1>
+<p class="lead">It takes about two minutes. Your photographer replies within 48 hours, and nothing is charged until you've seen and signed the agreement.</p></div></section>
+<section style="padding-top:8px"><div class="wrap"><div class="formcard">
+<form data-endpoint="/api/request" data-done="book-done" data-prefill novalidate>
+  <fieldset><legend>Your package</legend><div class="pkgpick"><label><input type="radio" name="package" value="city-hall" required><b>City Hall / Elopement</b><span>Short coverage · one location · from $850</span></label><label><input type="radio" name="package" value="adventure" required><b>Adventure Elopement</b><span>Half day · more than one location · from $1,250</span></label><label><input type="radio" name="package" value="micro-wedding" required><b>Micro-Wedding</b><span>Ceremony to reception · smaller guest list · from $1,000</span></label></div></fieldset>
+  <fieldset><legend>Date and place</legend><div class="grid2">
+    <div class="field"><label for="b-date">Wedding date</label><input id="b-date" type="date" name="date" required></div>
+    <div class="field"><label for="b-ph">Photographer</label><select id="b-ph" name="photographer"><option value="match">Match me with someone free</option><option value="joenell-photography">Joenell Photography</option></select></div>
+    <div class="field full"><label for="b-loc">Where <span class="opt">(venue, city hall, a park… or “not sure yet”)</span></label><input id="b-loc" name="location" required maxlength="200"></div>
+    <div class="field"><label for="b-guests">Guests <span class="opt">(roughly)</span></label><input id="b-guests" name="guests" inputmode="numeric" maxlength="20"></div>
+    <div class="field"><label for="b-start">Start time <span class="opt">(if you know it)</span></label><input id="b-start" name="start_time" maxlength="40"></div>
+  </div></fieldset>
+  <fieldset><legend>About you</legend><div class="grid2">
+    <div class="field"><label for="b-n1">Your name</label><input id="b-n1" name="name" required maxlength="100" autocomplete="name"></div>
+    <div class="field"><label for="b-n2">Partner's name <span class="opt">(optional)</span></label><input id="b-n2" name="partner" maxlength="100"></div>
+    <div class="field"><label for="b-em">Email</label><input id="b-em" type="email" name="email" required maxlength="200" autocomplete="email"></div>
+    <div class="field"><label for="b-tel">Phone <span class="opt">(optional, for a quick text)</span></label><input id="b-tel" type="tel" name="phone" maxlength="40" autocomplete="tel"></div>
+    <div class="field full"><label for="b-notes">Anything else? <span class="opt">(your plans, style, questions)</span></label><textarea id="b-notes" name="notes" maxlength="3000"></textarea></div>
+    <div class="field full"><label for="b-how">How did you hear about us? <span class="opt">(optional)</span></label><input id="b-how" name="heard" maxlength="200"></div>
+  </div></fieldset>
+  <div class="hp" aria-hidden="true"><label>Leave empty<input name="website" tabindex="-1" autocomplete="off"></label></div>
+  <label class="choice"><input type="checkbox" name="consent" value="yes" required> I agree that Joenell Studio may share these details with the photographer to arrange my booking (<a href="/privacy">privacy</a>).</label>
+  <button class="btn" type="submit" style="margin-top:20px;width:100%">Send booking request</button>
+  <div class="msg" role="alert"></div>
+</form>
+<div class="done" id="book-done" role="status"><div class="tick">✓</div><h2>Request sent</h2><p class="lead" style="margin:0 auto">Thank you! Your photographer will reply by email within 48 hours. Check your spam folder just in case.</p><p style="margin-top:20px"><a class="btn ghost" href="/photographers">Browse photographers</a></p></div>
+</div></div></section>
+</main>
+<footer class="site"><div class="wrap">
+  <div class="cols">
+    <div><a class="logo" href="/"><b>JOENELL</b><span>Studio · Vancouver</span></a>
+      <p style="margin-top:16px;max-width:300px">Vetted Vancouver wedding and elopement photographers at honest, fixed prices.</p></div>
+    <div><h4>Couples</h4><a href="/photographers">Find a photographer</a><a href="/packages">Packages</a><a href="/how-it-works">How it works</a><a href="/book">Request a booking</a></div>
+    <div><h4>Photographers</h4><a href="/join">Join Joenell Studio</a><a href="/join#apply">Apply</a><a href="/how-it-works#faq">FAQ</a></div>
+    <div><h4>Contact</h4><a href="mailto:hello@joenellstudio.com">hello@joenellstudio.com</a><a href="/terms">Terms</a><a href="/privacy">Privacy</a></div>
+  </div>
+  <div class="base"><span>© <span data-year>2026</span> Joenell Studio · Vancouver, British Columbia</span><span>Photos belong to the photographers who made them.</span></div>
+</div></footer>
+<script src="/assets/site.js?v=20261114a" defer></script>
+</body>
+</html>
