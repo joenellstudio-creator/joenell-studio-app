@@ -77,3 +77,16 @@ a{color:inherit}
 
 .mcover .bleed{object-position:50% 0%}
 .mcover .lines{padding-bottom:calc(var(--u)*9)}
+/* alignment fixes (Nov 25): masthead gets its own band above the photo; photos centred on their pages */
+.mcover .bleed{top:21%;height:79%;object-position:50% 12%}
+.mcover .shade{background:linear-gradient(180deg,#14130f 0%,#14130f 21%,rgba(20,19,15,.55) 26%,rgba(20,19,15,0) 40%,rgba(20,19,15,0) 58%,rgba(20,19,15,.88) 100%)}
+.mcover .mast{top:calc(var(--u)*4.5)}
+.mcover .m1{font-size:calc(var(--u)*14);letter-spacing:.08em;padding-left:.08em}
+.mcover .m2{letter-spacing:.7em;padding-left:.7em;margin-top:calc(var(--u)*2)}
+.mcover .lines{padding:0 calc(var(--u)*7) calc(var(--u)*11);text-align:left}
+.mcover .lines .small{display:none}
+.mcover .issue{position:absolute;top:calc(var(--u)*0);left:0;right:0;bottom:auto;text-align:center;font-size:calc(var(--u)*1.9);padding-top:calc(var(--u)*1.6);color:#cfc6b8}
+.mcover .issue{display:none}
+.mcover .foot-line{position:absolute;left:calc(var(--u)*7);right:calc(var(--u)*7);bottom:calc(var(--u)*5);display:flex;justify-content:space-between;font-size:calc(var(--u)*1.9);letter-spacing:.3em;text-transform:uppercase;color:#d8d0c3;border-top:1px solid rgba(231,207,159,.45);padding-top:calc(var(--u)*1.8)}
+.mat .ph,.duo .ph{margin-top:0}
+.pg.mat,.pg.duo{justify-content:center}
