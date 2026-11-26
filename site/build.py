@@ -14,7 +14,7 @@ from PIL import Image
 ROOT = os.path.dirname(os.path.abspath(__file__))
 WED = "https://www.joenellphotography.ca/"
 MAIL = "mailto:joenellstudio@gmail.com?subject=Event%20photography%20enquiry"
-VER = "20261125s"
+VER = "20261125t"
 
 JP = "https://www.joenellphotography.ca"
 def opener(img, num, title, by, pos="50% 30%"):
@@ -39,7 +39,7 @@ P = [
  dict(t="mcover", html='''<img class="bleed" src="/images/cl-wedding-kiss.jpg" alt="" draggable="false"><div class="shade"></div>
 <div class="mast"><span class="m1">JOENELL</span><span class="m2">STUDIO</span></div>
 <div class="lines"><p><b>Weddings · Engagements · Proposals</b> by Joenell Photography</p><p><b>Events</b> coming soon</p></div>
-<div class="foot-line"><span>Issue 01</span><span>Vancouver, BC</span></div>'''),
+<div class="foot-line"><span>Issue 01</span><span>Vancouver, BC</span></div><div class="gline"></div>'''),
  # 1 welcome
  dict(t="txt", html='''<p class="eb">From the studio</p><h2>One studio, every kind of story.</h2><div class="rule"></div>
 <p>Joenell Studio is the home of my photography in Vancouver. Every section of this magazine is a different kind of photography: a different moment, the same eye for what's real.</p>
