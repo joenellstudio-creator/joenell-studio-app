@@ -127,4 +127,9 @@ build();
 setTimeout(()=>{if(busy||turn||pos!==0||matchMedia('(prefers-reduced-motion:reduce)').matches)return;const t=startTurn(1);if(!t)return;busy=true;const t0=performance.now();
   (function s(now){const k=Math.min(1,(now-t0)/1300),a=Math.sin(Math.PI*k);draw([t.C[0]-a*W*0.32,t.C[1]-a*H*0.16]);if(k<1)requestAnimationFrame(s);else{t.el.remove();turn=null;busy=false;rest();}})(t0);},900);
 
+
+/* auto-open the cover once (owner, Nov 25): if nobody has touched the magazine after ~4s and it is on screen, open to the first spread, then never move on its own again */
+let touched=false;['pointerdown','keydown','wheel','touchstart'].forEach(ev=>root.addEventListener(ev,()=>{touched=true},{passive:true}));
+let onScreen=true;if('IntersectionObserver' in window){new IntersectionObserver(es=>{onScreen=es[0].isIntersecting&&es[0].intersectionRatio>0.5},{threshold:[0,0.5,1]}).observe(stage)}
+setTimeout(()=>{if(touched||pos!==0||busy||turn||!onScreen||matchMedia('(prefers-reduced-motion:reduce)').matches)return;go(1)},4200);
 })();

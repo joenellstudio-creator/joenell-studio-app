@@ -14,7 +14,7 @@ from PIL import Image
 ROOT = os.path.dirname(os.path.abspath(__file__))
 WED = "https://www.joenellphotography.ca/"
 MAIL = "mailto:joenellstudio@gmail.com?subject=Event%20photography%20enquiry"
-VER = "20261125t"
+VER = "20261125u"
 
 JP = "https://www.joenellphotography.ca"
 def opener(img, num, title, by, pos="50% 30%"):
