@@ -13,7 +13,7 @@ from PIL import Image
 ROOT = os.path.dirname(os.path.abspath(__file__))
 WED = "https://www.joenellphotography.ca/"
 MAIL = "mailto:joenellstudio@gmail.com?subject=Event%20photography%20enquiry"
-VER = "20261125n"
+VER = "20261125p"
 
 P = [
  # 0
@@ -28,8 +28,8 @@ P = [
  # 2
  dict(t="txt", cls="contents", html='''<p class="eb">In this issue</p><h2>Contents</h2><div class="rule"></div>
 <a class="toc" data-page="3"><span class="n">01</span><span class="t">Wedding photography<small>by Joenell Photography</small></span><span class="p">p. 3</span></a>
-<a class="toc" data-page="14"><span class="n">02</span><span class="t">Event photography<small>Coming soon</small></span><span class="p">p. 14</span></a>
-<a class="toc" data-page="16"><span class="n">03</span><span class="t">More to come<small>New styles over time</small></span><span class="p">p. 16</span></a>
+<a class="toc" data-page="12"><span class="n">02</span><span class="t">Event photography<small>Coming soon</small></span><span class="p">p. 12</span></a>
+<a class="toc" data-page="14"><span class="n">03</span><span class="t">More to come<small>New styles over time</small></span><span class="p">p. 14</span></a>
 <p class="how">Tap a section to jump there</p>'''),
  # 3
  dict(t="opener", html='''<img class="bleed" src="/images/cl-wedding-veil.jpg" alt="" draggable="false"><div class="shade"></div>
@@ -40,10 +40,8 @@ P = [
 <p>Natural, warm and true to how the day felt: gentle direction, real moments and bright, true-to-life colour.</p>
 <a class="cta" href="{WED}">Visit joenellphotography.ca</a>'''),
  # 5-12 photos
- dict(t="full", img="cl-wedding-vows", cap="The vows"),
  dict(t="mat", img="cl-wedding-path", cap="Through the garden", sub="An autumn wedding in Vancouver"),
  dict(t="duo", imgs=["cl-wedding-dip", "cl-wedding-bench"], cap="A few minutes for the two of you"),
- dict(t="full", img="cl-wedding-dance", cap="The first dance"),
  dict(t="full", img="jh-kiss", cap="Surprise proposals"),
  dict(t="mat", img="jh-lookout", cap="She said yes", sub="Bowen Lookout · Cypress Mountain"),
  dict(t="full", img="st-03", cap="Engagements"),
@@ -74,7 +72,7 @@ for n in sorted(x for x in used if x):
     IMG[n] = {"w": w, "h": h, "src": f"/images/{n}.jpg"}
 for p in P:  # engine reads p.html for unknown types; keep class for styling
     if "cls" in p: p["t"] = p["t"] + " " + p.pop("cls")
-ALBUM = dict(el="mag", chapBar=".chapters", imgs=IMG, pages=P, chapters=[{"label": "Contents", "at": 2}, {"label": "Weddings", "at": 3}, {"label": "Events", "at": 14}])
+ALBUM = dict(el="mag", chapBar=".chapters", imgs=IMG, pages=P, chapters=[{"label": "Contents", "at": 2}, {"label": "Weddings", "at": 3}, {"label": "Events", "at": 12}])
 
 HTML = open(os.path.join(ROOT, "template.html")).read()
 out = HTML.replace("__ALBUM__", json.dumps(ALBUM, separators=(",", ":"))).replace("__VER__", VER).replace("__WED__", WED).replace("__MAIL__", MAIL)
