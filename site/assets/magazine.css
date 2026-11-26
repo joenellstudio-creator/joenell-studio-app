@@ -65,7 +65,7 @@ a{color:inherit}
 
 /* below the magazine */
 .index{max-width:1100px;margin:10px auto 0;padding:0 20px 40px}
-.index .cols{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.index .cols{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
 .index .item{display:flex;gap:14px;align-items:baseline;padding:20px;border:1px solid rgba(217,189,138,.22);border-radius:16px;text-decoration:none;font-size:14.5px;color:#b9b0a2;line-height:1.5}
 .index .item:hover{border-color:#d9bd8a}
 .index .item b{display:block;font-family:"Bodoni Moda",Georgia,serif;font-weight:400;font-size:20px;color:#fff;margin-bottom:4px}
@@ -73,7 +73,7 @@ a{color:inherit}
 @media (max-width:800px){.index .cols{grid-template-columns:1fr}}
 .foot{text-align:center;font-size:13px;color:#8d8577;padding:10px 0 30px}
 .foot p{margin:0}
-@media (max-width:520px){.top nav{display:none}}
+@media (max-width:760px){.top nav{display:none}}
 
 .mcover .bleed{object-position:50% 0%}
 .mcover .lines{padding-bottom:calc(var(--u)*9)}

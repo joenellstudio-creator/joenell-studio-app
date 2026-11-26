@@ -13,54 +13,63 @@ from PIL import Image
 ROOT = os.path.dirname(os.path.abspath(__file__))
 WED = "https://www.joenellphotography.ca/"
 MAIL = "mailto:joenellstudio@gmail.com?subject=Event%20photography%20enquiry"
-VER = "20261125q"
+VER = "20261125r"
+
+JP = "https://www.joenellphotography.ca"
+def opener(img, num, title, by, pos="50% 30%"):
+    return dict(t="opener", html=f'''<img class="bleed" src="/images/{img}.jpg" style="object-position:{pos}" alt="" draggable="false"><div class="shade"></div>
+<div class="otext"><span class="onum">{num}</span><h2>{title}</h2><p>{by}</p></div>''')
+def linkpage(eb, h, paras, url, label):
+    body = "".join(f"<p>{x}</p>" for x in paras)
+    return dict(t="txt", html=f'''<p class="eb">{eb}</p><h2>{h}</h2><div class="rule"></div>{body}<a class="cta" href="{url}">{label}</a>''')
+def toc(page, n, title, small):
+    return f'<a class="toc" data-page="{page}"><span class="n">{n}</span><span class="t">{title}<small>{small}</small></span><span class="p">p. {page}</span></a>'
 
 P = [
- # 0
- dict(t="mcover", html=f'''<img class="bleed" src="/images/cl-wedding-kiss.jpg" alt="" draggable="false"><div class="shade"></div>
+ # 0 cover
+ dict(t="mcover", html='''<img class="bleed" src="/images/cl-wedding-kiss.jpg" alt="" draggable="false"><div class="shade"></div>
 <div class="mast"><span class="m1">JOENELL</span><span class="m2">STUDIO</span></div>
-<div class="lines"><p><b>Weddings</b> by Joenell Photography</p><p><b>Events</b> coming soon</p></div>
+<div class="lines"><p><b>Weddings · Engagements · Proposals</b> by Joenell Photography</p><p><b>Events</b> coming soon</p></div>
 <div class="foot-line"><span>Issue 01</span><span>Vancouver, BC</span></div>'''),
- # 1
+ # 1 welcome
  dict(t="txt", html='''<p class="eb">From the studio</p><h2>One studio, every kind of story.</h2><div class="rule"></div>
 <p>Joenell Studio is the home of my photography in Vancouver. Every section of this magazine is a different kind of photography: a different moment, the same eye for what's real.</p>
 <p>Turn the page to see what the studio covers, or jump straight to a section.</p><p class="sig">Joenell</p>'''),
- # 2
- dict(t="txt", cls="contents", html='''<p class="eb">In this issue</p><h2>Contents</h2><div class="rule"></div>
-<a class="toc" data-page="3"><span class="n">01</span><span class="t">Wedding photography<small>by Joenell Photography</small></span><span class="p">p. 3</span></a>
-<a class="toc" data-page="12"><span class="n">02</span><span class="t">Event photography<small>Coming soon</small></span><span class="p">p. 12</span></a>
-<a class="toc" data-page="14"><span class="n">03</span><span class="t">More to come<small>New styles over time</small></span><span class="p">p. 14</span></a>
-<p class="how">Tap a section to jump there</p>'''),
- # 3
- dict(t="opener", html='''<img class="bleed" src="/images/cl-wedding-veil.jpg" alt="" draggable="false"><div class="shade"></div>
-<div class="otext"><span class="onum">01</span><h2>Wedding<br>photography</h2><p>by Joenell Photography</p></div>'''),
- # 4
- dict(t="txt", html=f'''<p class="eb">01 · Wedding photography</p><h2>Joenell Photography</h2><div class="rule"></div>
-<p>Weddings, elopements, engagement sessions and surprise proposals across Vancouver and British Columbia.</p>
-<p>Natural, warm and true to how the day felt: gentle direction, real moments and bright, true-to-life colour.</p>
-<a class="cta" href="{WED}">Visit joenellphotography.ca</a>'''),
- # 5-12 photos
+ # 2 contents
+ dict(t="txt contents", html='<p class="eb">In this issue</p><h2>Contents</h2><div class="rule"></div>'
+   + toc(3, "01", "Weddings", "by Joenell Photography")
+   + toc(7, "02", "Engagements", "by Joenell Photography")
+   + toc(11, "03", "Surprise proposals", "by Joenell Photography")
+   + toc(15, "04", "Event photography", "Coming soon")
+   + toc(17, "05", "More to come", "New styles over time")
+   + '<p class="how">Tap a section to jump there</p>'),
+ # 3-6 weddings
+ opener("cl-wedding-veil", "01", "Wedding<br>photography", "by Joenell Photography"),
+ linkpage("01 · Weddings", "Your wedding day", ["Garden weddings, city celebrations and everything in between, across Vancouver and British Columbia.",
+   "Natural, warm and true to how the day felt: gentle direction, real moments and bright, true-to-life colour."], JP + "/weddings", "See wedding photography"),
  dict(t="mat", img="cl-wedding-path", cap="Through the garden", sub="An autumn wedding in Vancouver"),
  dict(t="duo", imgs=["cl-wedding-dip", "cl-wedding-bench"], cap="A few minutes for the two of you"),
- dict(t="full", img="jh-kiss", cap="Surprise proposals"),
- dict(t="mat", img="jh-lookout", cap="She said yes", sub="Bowen Lookout · Cypress Mountain"),
- dict(t="full", img="st-03", cap="Engagements"),
- dict(t="full", img="cl-engagement-embrace", cap="Golden hour"),
- # 13
- dict(t="txt", html=f'''<p class="eb">Your wedding</p><h2>Let's tell your story.</h2><div class="rule"></div>
-<p>See full galleries, collections and prices, and check your date with Joenell Photography.</p>
-<a class="cta" href="{WED}">Visit Joenell Photography</a>'''),
- # 14
- dict(t="dark", html='''<div class="otext"><span class="onum">02</span><h2>Event<br>photography</h2><p>Coming soon</p></div>'''),
- # 15
- dict(t="txt", html=f'''<p class="eb">02 · Event photography</p><h2>Your event, captured.</h2><div class="rule"></div>
-<p>Galas, launches, fundraisers and celebrations, photographed with the same eye for real moments. This section is coming soon.</p>
-<a class="cta" href="{MAIL}">Ask about your event</a>'''),
- # 16
- dict(t="txt", html='''<p class="eb">03 · More to come</p><h2>The next chapter.</h2><div class="rule"></div>
+ # 7-10 engagements
+ opener("st-03", "02", "Engagement<br>sessions", "by Joenell Photography", "50% 20%"),
+ linkpage("02 · Engagements", "Before the big day", ["A relaxed session for the two of you: in the gardens, by the water or somewhere that means something to you.",
+   "Perfect for save-the-dates, and a chance to get comfortable in front of the camera."], JP + "/engagements", "See engagement sessions"),
+ dict(t="full", img="cl-engagement-embrace", cap="Golden hour on the water"),
+ dict(t="mat", img="je-cover", cap="Together", sub="An engagement session in Vancouver"),
+ # 11-14 proposals
+ opener("jh-gaze", "03", "Surprise<br>proposals", "by Joenell Photography", "50% 25%"),
+ linkpage("03 · Surprise proposals", "The moment she says yes", ["I plan the spot and the timing with you, stay hidden nearby, and capture the question, the answer and the happy minutes after.",
+   "From Bowen Lookout to the seawall, the surprise stays a surprise."], JP + "/engagements", "Plan your proposal"),
+ dict(t="mat", img="jh-lookout", cap="The question", sub="Bowen Lookout · Cypress Mountain"),
+ dict(t="full", img="jh-kiss", cap="She said yes"),
+ # 15-16 events
+ dict(t="dark", html='''<div class="otext"><span class="onum">04</span><h2>Event<br>photography</h2><p>Coming soon</p></div>'''),
+ linkpage("04 · Event photography", "Your event, captured.", ["Galas, launches, fundraisers and celebrations, photographed with the same eye for real moments. This section is coming soon."], MAIL, "Ask about your event"),
+ # 17-18
+ dict(t="txt", html='''<p class="eb">05 · More to come</p><h2>The next chapter.</h2><div class="rule"></div>
 <p>New kinds of photography join the studio over time. Each one gets its own section of this magazine.</p>
 <a class="toc back" data-page="2"><span class="t">Back to contents</span></a>'''),
- # 17
+ linkpage("Get in touch", "Let's talk about your day.", ["Weddings, engagements and proposals: check your date with Joenell Photography.", "Events and anything else: send an email."], JP + "/contact", "Book your date"),
+ # 19
  dict(t="backc", title="Joenell Studio", meta="joenellstudio.com · Vancouver"),
 ]
 assert len(P) % 2 == 0
@@ -70,9 +79,7 @@ IMG = {}
 for n in sorted(x for x in used if x):
     w, h = Image.open(os.path.join(ROOT, "images", n + ".jpg")).size
     IMG[n] = {"w": w, "h": h, "src": f"/images/{n}.jpg"}
-for p in P:  # engine reads p.html for unknown types; keep class for styling
-    if "cls" in p: p["t"] = p["t"] + " " + p.pop("cls")
-ALBUM = dict(el="mag", chapBar=".chapters", imgs=IMG, pages=P, chapters=[{"label": "Contents", "at": 2}, {"label": "Weddings", "at": 3}, {"label": "Events", "at": 12}])
+ALBUM = dict(el="mag", chapBar=".chapters", imgs=IMG, pages=P, chapters=[{"label": "Contents", "at": 2}, {"label": "Weddings", "at": 3}, {"label": "Engagements", "at": 7}, {"label": "Proposals", "at": 11}, {"label": "Events", "at": 15}])
 
 HTML = open(os.path.join(ROOT, "template.html")).read()
 out = HTML.replace("__ALBUM__", json.dumps(ALBUM, separators=(",", ":"))).replace("__VER__", VER).replace("__WED__", WED).replace("__MAIL__", MAIL)
