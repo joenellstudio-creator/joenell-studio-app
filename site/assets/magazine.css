@@ -27,10 +27,10 @@ a{color:inherit}
 .pg.mcover,.pg.opener,.pg.dark{background:#14130f;color:#fff;justify-content:flex-end;align-items:stretch}
 .pg .bleed{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;-webkit-user-drag:none}
 .pg .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,14,11,.62) 0%,rgba(15,14,11,0) 32%,rgba(15,14,11,0) 55%,rgba(15,14,11,.78) 100%);pointer-events:none}
-.mcover .mast{position:absolute;top:calc(var(--u)*5);left:0;right:0;text-align:center;line-height:.86}
-.mcover .m1{display:block;font-family:var(--display);font-weight:700;font-size:calc(var(--u)*16.5);letter-spacing:.06em;color:#fff}
+.mcover .mast{position:absolute;top:calc(var(--u)*3.5);left:0;right:0;text-align:center;line-height:.86}
+.mcover .m1{display:block;font-family:var(--display);font-weight:700;font-size:calc(var(--u)*13.5);letter-spacing:.06em;color:#fff}
 .mcover .m2{display:block;font-size:calc(var(--u)*3);letter-spacing:1.1em;padding-left:1.1em;color:#e7cf9f;margin-top:calc(var(--u)*2.4)}
-.mcover .issue{position:absolute;top:calc(var(--u)*30);left:0;right:0;text-align:center;font-size:calc(var(--u)*2.1);letter-spacing:.34em;text-transform:uppercase;color:#f1e9dc}
+.mcover .issue{position:absolute;bottom:calc(var(--u)*3);left:calc(var(--u)*7);right:auto;text-align:left;font-size:calc(var(--u)*2.1);letter-spacing:.34em;text-transform:uppercase;color:#f1e9dc}
 .mcover .lines{position:relative;padding:0 calc(var(--u)*7) calc(var(--u)*8)}
 .mcover .lines p{margin:0 0 calc(var(--u)*1.6);font-family:var(--display);font-size:calc(var(--u)*4.4);line-height:1.15}
 .mcover .lines b{font-weight:500;color:#e7cf9f;display:block;font-family:var(--body);font-size:calc(var(--u)*2.3);letter-spacing:.3em;text-transform:uppercase;margin-bottom:calc(var(--u)*.6)}
@@ -74,3 +74,6 @@ a{color:inherit}
 .foot{text-align:center;font-size:13px;color:#8d8577;padding:10px 0 30px}
 .foot p{margin:0}
 @media (max-width:520px){.top nav{display:none}}
+
+.mcover .bleed{object-position:50% 0%}
+.mcover .lines{padding-bottom:calc(var(--u)*9)}

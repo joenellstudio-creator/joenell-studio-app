@@ -13,7 +13,7 @@ from PIL import Image
 ROOT = os.path.dirname(os.path.abspath(__file__))
 WED = "https://www.joenellphotography.ca/"
 MAIL = "mailto:joenellstudio@gmail.com?subject=Event%20photography%20enquiry"
-VER = "20261125m"
+VER = "20261125n"
 
 P = [
  # 0
