@@ -7,13 +7,14 @@ The magazine uses assets/flipbook.js (page curl by dragging a bottom corner). Pa
   duo     two photos with caption                       backc   back cover
 Links: <a class="cta" href="https://..."> opens a site; <a data-page="N"> jumps to page N.
 """
-import json, os
+import json, os, html as H
+from stories import STORIES
 from PIL import Image
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 WED = "https://www.joenellphotography.ca/"
 MAIL = "mailto:joenellstudio@gmail.com?subject=Event%20photography%20enquiry"
-VER = "20261125r"
+VER = "20261125s"
 
 JP = "https://www.joenellphotography.ca"
 def opener(img, num, title, by, pos="50% 30%"):
@@ -24,6 +25,14 @@ def linkpage(eb, h, paras, url, label):
     return dict(t="txt", html=f'''<p class="eb">{eb}</p><h2>{h}</h2><div class="rule"></div>{body}<a class="cta" href="{url}">{label}</a>''')
 def toc(page, n, title, small):
     return f'<a class="toc" data-page="{page}"><span class="n">{n}</span><span class="t">{title}<small>{small}</small></span><span class="p">p. {page}</span></a>'
+
+def storypage(items, eb):
+    out = f'<p class="eb">{eb}</p>'
+    for st in items:
+        out += (f'<a class="story" href="{st["url"]}"><img src="/images/{st["img"]}-s.jpg" alt="" draggable="false">'
+                f'<span class="sb"><small>{H.escape(st["place"])}</small><b>{H.escape(st["title"])}</b>'
+                f'<span class="st">{H.escape(st["teaser"])}</span><span class="sl">{H.escape(st["cta"])} →</span></span></a>')
+    return dict(t="txt stories", html=out)
 
 P = [
  # 0 cover
@@ -40,8 +49,9 @@ P = [
    + toc(3, "01", "Weddings", "by Joenell Photography")
    + toc(7, "02", "Engagements", "by Joenell Photography")
    + toc(11, "03", "Surprise proposals", "by Joenell Photography")
-   + toc(15, "04", "Event photography", "Coming soon")
-   + toc(17, "05", "More to come", "New styles over time")
+   + toc(15, "04", "Stories", "From the journal")
+   + toc(17, "05", "Event photography", "Coming soon")
+   + toc(19, "06", "More to come", "New styles over time")
    + '<p class="how">Tap a section to jump there</p>'),
  # 3-6 weddings
  opener("cl-wedding-veil", "01", "Wedding<br>photography", "by Joenell Photography"),
@@ -61,11 +71,14 @@ P = [
    "From Bowen Lookout to the seawall, the surprise stays a surprise."], JP + "/engagements", "Plan your proposal"),
  dict(t="mat", img="jh-lookout", cap="The question", sub="Bowen Lookout · Cypress Mountain"),
  dict(t="full", img="jh-kiss", cap="She said yes"),
- # 15-16 events
- dict(t="dark", html='''<div class="otext"><span class="onum">04</span><h2>Event<br>photography</h2><p>Coming soon</p></div>'''),
- linkpage("04 · Event photography", "Your event, captured.", ["Galas, launches, fundraisers and celebrations, photographed with the same eye for real moments. This section is coming soon."], MAIL, "Ask about your event"),
+ # 15-16 stories
+ storypage(STORIES[:2], "04 · Stories from the journal"),
+ storypage(STORIES[2:], "04 · Stories · <a href=\"/journal\" class=\"jl\">All stories</a>"),
+ # 17-18 events
+ dict(t="dark", html='''<div class="otext"><span class="onum">05</span><h2>Event<br>photography</h2><p>Coming soon</p></div>'''),
+ linkpage("05 · Event photography", "Your event, captured.", ["Galas, launches, fundraisers and celebrations, photographed with the same eye for real moments. This section is coming soon."], MAIL, "Ask about your event"),
  # 17-18
- dict(t="txt", html='''<p class="eb">05 · More to come</p><h2>The next chapter.</h2><div class="rule"></div>
+ dict(t="txt", html='''<p class="eb">06 · More to come</p><h2>The next chapter.</h2><div class="rule"></div>
 <p>New kinds of photography join the studio over time. Each one gets its own section of this magazine.</p>
 <a class="toc back" data-page="2"><span class="t">Back to contents</span></a>'''),
  linkpage("Get in touch", "Let's talk about your day.", ["Weddings, engagements and proposals: check your date with Joenell Photography.", "Events and anything else: send an email."], JP + "/contact", "Book your date"),
@@ -79,9 +92,67 @@ IMG = {}
 for n in sorted(x for x in used if x):
     w, h = Image.open(os.path.join(ROOT, "images", n + ".jpg")).size
     IMG[n] = {"w": w, "h": h, "src": f"/images/{n}.jpg"}
-ALBUM = dict(el="mag", chapBar=".chapters", imgs=IMG, pages=P, chapters=[{"label": "Contents", "at": 2}, {"label": "Weddings", "at": 3}, {"label": "Engagements", "at": 7}, {"label": "Proposals", "at": 11}, {"label": "Events", "at": 15}])
+ALBUM = dict(el="mag", chapBar=".chapters", imgs=IMG, pages=P, chapters=[{"label": "Contents", "at": 2}, {"label": "Weddings", "at": 3}, {"label": "Engagements", "at": 7}, {"label": "Proposals", "at": 11}, {"label": "Stories", "at": 15}, {"label": "Events", "at": 17}])
 
 HTML = open(os.path.join(ROOT, "template.html")).read()
 out = HTML.replace("__ALBUM__", json.dumps(ALBUM, separators=(",", ":"))).replace("__VER__", VER).replace("__WED__", WED).replace("__MAIL__", MAIL)
 open(os.path.join(ROOT, "index.html"), "w").write(out)
 print("pages", len(P))
+
+# ---------------------------------------------------------------- journal page (/journal)
+def journal():
+    cards = ""
+    for st in STORIES:
+        tips = "".join(f"<li>{H.escape(t)}</li>" for t in st["tips"])
+        cards += f'''<article class="jcard" id="{st["slug"]}">
+  <a class="jimg" href="{st["url"]}"><img src="/images/{st["img"]}-s.jpg" srcset="/images/{st["img"]}-s.jpg 640w, /images/{st["img"]}.jpg 1400w" sizes="(max-width:820px) 100vw, 45vw" alt="{H.escape(st["alt"])}" loading="lazy"></a>
+  <div class="jbody">
+    <p class="jk">{H.escape(st["kind"])} · {H.escape(st["place"])}</p>
+    <h2><a href="{st["url"]}">{H.escape(st["title"])}</a></h2>
+    <p>{H.escape(st["teaser"])}</p>
+    <ul>{tips}</ul>
+    <a class="jcta" href="{st["url"]}">{H.escape(st["cta"])} on Joenell Photography →</a>
+  </div>
+</article>
+'''
+    schema = {"@context": "https://schema.org", "@type": "CollectionPage", "name": "Joenell Studio Journal", "url": "https://joenellstudio.com/journal",
+              "isPartOf": {"@type": "WebSite", "name": "Joenell Studio", "url": "https://joenellstudio.com/"},
+              "mainEntity": {"@type": "ItemList", "itemListElement": [
+                  {"@type": "ListItem", "position": i + 1, "name": st["title"], "url": st["url"]} for i, st in enumerate(STORIES)]}}
+    page = f'''<!doctype html>
+<html lang="en-CA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Journal · Photography stories from Vancouver &amp; BC · Joenell Studio</title>
+<meta name="description" content="Stories from real shoots in Vancouver and BC: a surprise proposal at Bowen Lookout, golden hour on English Bay, tulips at Sendall Gardens in Langley and an autumn wedding at Abkhazi Garden in Victoria.">
+<link rel="canonical" href="https://joenellstudio.com/journal">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Joenell Studio">
+<meta property="og:title" content="The Joenell Studio Journal"><meta property="og:description" content="Stories, places and tips from real photo shoots around Vancouver and BC.">
+<meta property="og:url" content="https://joenellstudio.com/journal"><meta property="og:image" content="https://joenellstudio.com/images/jh-cover.jpg">
+<meta name="twitter:card" content="summary_large_image"><meta name="theme-color" content="#14130f">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,700;1,6..96,400&family=Jost:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="/assets/magazine.css?v={VER}">
+<script type="application/ld+json">{json.dumps(schema)}</script>
+</head>
+<body class="journal">
+<header class="top">
+  <a class="mark" href="/" aria-label="Joenell Studio home"><b>JOENELL</b><span>Studio</span></a>
+  <nav><a href="/">Magazine</a><a href="{JP}/weddings">Weddings</a><a href="{JP}/engagements">Engagements</a><a href="/journal" aria-current="page">Journal</a></nav>
+</header>
+<main class="jwrap">
+  <p class="jeb">The journal</p>
+  <h1>Stories from <em>real shoots</em></h1>
+  <p class="jlead">Places, planning and small tips from photo sessions around Vancouver and British Columbia. Each story continues on Joenell Photography, with the full photos and the details.</p>
+  {cards}
+  <p class="jnext">Event photography stories are coming soon. <a href="/">Back to the magazine</a></p>
+</main>
+<footer class="foot"><p>© 2026 Joenell Studio · Vancouver, BC · <a href="{JP}/">joenellphotography.ca</a></p></footer>
+</body>
+</html>
+'''
+    open(os.path.join(ROOT, "journal.html"), "w").write(page)
+journal()
+print("journal ok")

@@ -10,3 +10,9 @@ Since 2026-11-25 Joenell Studio is the parent brand of Joenell's photography (ow
 - Sections: 01 Weddings (→ joenellphotography.ca/weddings), 02 Engagements (→ /engagements), 03 Surprise proposals (→ /engagements), 04 Events (coming soon, email), 05 More to come, Get in touch (→ /contact).
 - PRIVACY (owner): no photos of Chris & Lorena's guests — first-dance and vows photos removed. Only the couple themselves.
 - Cover: masthead band above the photo so faces stay clear; photos centred on mat pages.
+
+## Journal (2026-11-25)
+- `/journal` (journal.html) + a "04 Stories" spread in the magazine. Story data lives in `site/stories.py` (short original teasers, no names); each links to the full post on joenellphotography.ca.
+- Bowen Lookout → /blog/bowen-lookout-cypress-mountain-proposal; English Bay golden hour → /blog/stanley-park-wedding-engagement-photos.
+- TODO: Sendall Gardens currently → /engagements and Abkhazi Garden → /victoria-wedding-photographer. When the wedding site publishes those posts, change `url` + `cta` in stories.py and rebuild.
+- Event stories will be written on joenellstudio.com itself (own posts) once events start.
