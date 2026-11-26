@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Joenell Studio · Photography in Vancouver, BC</title>
+<meta name="description" content="Joenell Studio is the home of Joenell's photography in Vancouver: weddings and engagements with Joenell Photography, and event photography coming soon. Flip through the magazine.">
+<link rel="canonical" href="https://joenellstudio.com/">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Joenell Studio">
+<meta property="og:title" content="Joenell Studio · Photography in Vancouver, BC">
+<meta property="og:description" content="Flip through the Joenell Studio magazine: weddings by Joenell Photography, events coming soon.">
+<meta property="og:url" content="https://joenellstudio.com/"><meta property="og:image" content="https://joenellstudio.com/images/cl-wedding-kiss.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#14130f">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,700;1,6..96,400&family=Jost:wght@300;400;500&family=Pinyon+Script&display=swap">
+<link rel="preload" as="image" href="/images/cl-wedding-kiss.jpg">
+<link rel="stylesheet" href="/assets/flipbook.css?v=__VER__">
+<link rel="stylesheet" href="/assets/magazine.css?v=__VER__">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Joenell Studio","url":"https://joenellstudio.com/","areaServed":"Vancouver, British Columbia","subOrganization":{"@type":"LocalBusiness","name":"Joenell Photography","url":"https://www.joenellphotography.ca/","description":"Wedding and engagement photography in Vancouver, BC"}}</script>
+<script>window.ALBUM=__ALBUM__;</script>
+<script src="/assets/flipbook.js?v=__VER__" defer></script>
+</head>
+<body>
+<header class="top">
+  <a class="mark" href="/" aria-label="Joenell Studio home"><b>JOENELL</b><span>Studio</span></a>
+  <nav><a href="__WED__">Weddings</a><a href="#" data-jump="14">Events</a><a href="#contact">Contact</a></nav>
+</header>
+<main>
+  <h1 class="sr">Joenell Studio — photography in Vancouver, BC</h1>
+  <div class="album" id="mag" aria-label="Joenell Studio magazine">
+    <div class="chapters" role="group" aria-label="Jump to a section"></div>
+    <div class="stage"><div class="book"></div></div>
+    <div class="ctrl"><button class="prev" aria-label="Previous page">&#8249;</button><span class="count">Cover</span><button class="next" aria-label="Next page">&#8250;</button></div>
+    <p class="hint"><b>Drag a bottom corner</b> to turn the page, like a real magazine</p>
+  </div>
+
+  <section class="index" id="contact">
+    <div class="cols">
+      <a class="item" href="__WED__"><span class="n">01</span><span><b>Wedding photography</b>by Joenell Photography · joenellphotography.ca →</span></a>
+      <a class="item" href="__MAIL__"><span class="n">02</span><span><b>Event photography</b>Coming soon · ask about your event →</span></a>
+      <a class="item" href="https://www.joenellphotography.ca/contact"><span class="n">✉</span><span><b>Contact</b>Wedding enquiries on joenellphotography.ca; events by email</span></a>
+    </div>
+  </section>
+</main>
+<footer class="foot"><p>© <span id="y">2026</span> Joenell Studio · Vancouver, BC</p></footer>
+<script>
+document.getElementById('y').textContent=new Date().getFullYear();
+document.querySelectorAll('[data-jump]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();const m=document.getElementById('mag');if(window.ALBUM.jump)window.ALBUM.jump(+a.dataset.jump);m.scrollIntoView({behavior:'smooth',block:'center'});}));
+</script>
+</body>
+</html>

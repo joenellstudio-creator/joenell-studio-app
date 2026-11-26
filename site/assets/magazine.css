@@ -1,0 +1,76 @@
+/* Joenell Studio — magazine homepage: a dark table, a glossy magazine (page curl from flipbook.js), editorial pages. */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100svh;background:radial-gradient(120% 90% at 50% 10%,#2a2721,#14130f 70%);color:#e9e2d6;font-family:"Jost","Avenir Next",system-ui,sans-serif;font-weight:300;overflow-x:clip}
+a{color:inherit}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.top{display:flex;align-items:center;justify-content:space-between;padding:20px clamp(18px,4vw,44px)}
+.mark{display:flex;flex-direction:column;line-height:1;text-decoration:none;color:#fff}
+.mark b{font-family:"Bodoni Moda",Georgia,serif;font-weight:500;font-size:21px;letter-spacing:.3em}
+.mark span{font-size:10px;letter-spacing:.5em;text-transform:uppercase;color:#d9bd8a;margin-top:6px}
+.top nav{display:flex;gap:clamp(14px,3vw,28px)}
+.top nav a{text-decoration:none;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:#cfc6b8}
+.top nav a:hover{color:#fff}
+
+/* magazine table */
+.album{background:transparent;border-radius:0;padding:4px 8px 18px;--paper:#fffdf9}
+.album .ctrl{color:#a59c8e}
+.album .ctrl button{background:#1f1d19;border-color:rgba(217,189,138,.45);color:#d9bd8a}
+.album .hint{color:#a59c8e}
+.album .hint b{color:#d9bd8a}
+.album .chapters button{background:transparent;color:#cfc6b8;border:1px solid rgba(217,189,138,.35);font-family:inherit;font-size:13px;letter-spacing:.12em;text-transform:uppercase;padding:8px 16px;border-radius:999px;cursor:pointer}
+.album .chapters{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.album .chapters button.on{background:#d9bd8a;color:#14130f;border-color:#d9bd8a}
+.album .bookshadow{box-shadow:0 40px 60px -30px rgba(0,0,0,.8),0 2px 8px rgba(0,0,0,.4)}
+
+/* cover */
+.pg.mcover,.pg.opener,.pg.dark{background:#14130f;color:#fff;justify-content:flex-end;align-items:stretch}
+.pg .bleed{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;-webkit-user-drag:none}
+.pg .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,14,11,.62) 0%,rgba(15,14,11,0) 32%,rgba(15,14,11,0) 55%,rgba(15,14,11,.78) 100%);pointer-events:none}
+.mcover .mast{position:absolute;top:calc(var(--u)*5);left:0;right:0;text-align:center;line-height:.86}
+.mcover .m1{display:block;font-family:var(--display);font-weight:700;font-size:calc(var(--u)*16.5);letter-spacing:.06em;color:#fff}
+.mcover .m2{display:block;font-size:calc(var(--u)*3);letter-spacing:1.1em;padding-left:1.1em;color:#e7cf9f;margin-top:calc(var(--u)*2.4)}
+.mcover .issue{position:absolute;top:calc(var(--u)*30);left:0;right:0;text-align:center;font-size:calc(var(--u)*2.1);letter-spacing:.34em;text-transform:uppercase;color:#f1e9dc}
+.mcover .lines{position:relative;padding:0 calc(var(--u)*7) calc(var(--u)*8)}
+.mcover .lines p{margin:0 0 calc(var(--u)*1.6);font-family:var(--display);font-size:calc(var(--u)*4.4);line-height:1.15}
+.mcover .lines b{font-weight:500;color:#e7cf9f;display:block;font-family:var(--body);font-size:calc(var(--u)*2.3);letter-spacing:.3em;text-transform:uppercase;margin-bottom:calc(var(--u)*.6)}
+.mcover .lines .small{font-family:var(--body);font-size:calc(var(--u)*2.2);letter-spacing:.24em;text-transform:uppercase;color:#d8d0c3;margin-top:calc(var(--u)*3)}
+
+/* section openers */
+.otext{position:relative;padding:0 calc(var(--u)*8) calc(var(--u)*10)}
+.onum{display:block;font-family:var(--display);font-size:calc(var(--u)*4);color:#e7cf9f;letter-spacing:.2em;margin-bottom:calc(var(--u)*2)}
+.otext h2{margin:0;font-family:var(--display);font-weight:400;font-size:calc(var(--u)*12);line-height:.98;color:#fff}
+.otext p{margin:calc(var(--u)*3) 0 0;font-size:calc(var(--u)*2.5);letter-spacing:.32em;text-transform:uppercase;color:#e7cf9f}
+.pg.dark{background:radial-gradient(120% 90% at 30% 20%,#2c2923,#14130f 75%);justify-content:center}
+.pg.dark .otext{padding-bottom:0}
+
+/* editorial text pages */
+.pg.txt{background:#fffdf9}
+.txt .sig{font-family:var(--script);font-size:calc(var(--u)*7);color:var(--gold);margin-top:calc(var(--u)*2)}
+.txt .cta{background:#14130f;letter-spacing:.2em;border-radius:999px;padding:calc(var(--u)*2.8) calc(var(--u)*5)}
+.txt .cta:hover{background:var(--gold)}
+.toc{display:grid;grid-template-columns:calc(var(--u)*9) 1fr auto;align-items:baseline;width:100%;padding:calc(var(--u)*3.2) 0;border-top:1px solid rgba(176,138,79,.35);text-decoration:none;color:var(--ink);cursor:pointer;pointer-events:auto}
+.toc:last-of-type{border-bottom:1px solid rgba(176,138,79,.35)}
+.toc .n{font-family:var(--display);font-size:calc(var(--u)*4);color:var(--gold)}
+.toc .t{font-family:var(--display);font-size:calc(var(--u)*5);line-height:1.1}
+.toc .t small{display:block;font-family:var(--body);font-size:calc(var(--u)*2.2);letter-spacing:.24em;text-transform:uppercase;color:var(--ink-soft);margin-top:calc(var(--u)*1)}
+.toc .p{font-size:calc(var(--u)*2.3);letter-spacing:.2em;color:var(--ink-soft)}
+.toc:hover .t{color:var(--gold)}
+.toc.back{grid-template-columns:1fr;border:0;margin-top:calc(var(--u)*2)}
+.toc.back .t{font-family:var(--body);font-size:calc(var(--u)*2.4);letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+.backc{background:#14130f}
+.backc .title{font-family:var(--display);font-weight:500;letter-spacing:.2em;font-size:calc(var(--u)*7);color:#fff}
+.backc .meta{color:#d9bd8a}
+.backc .gframe{border-color:rgba(217,189,138,.5)}
+
+/* below the magazine */
+.index{max-width:1100px;margin:10px auto 0;padding:0 20px 40px}
+.index .cols{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.index .item{display:flex;gap:14px;align-items:baseline;padding:20px;border:1px solid rgba(217,189,138,.22);border-radius:16px;text-decoration:none;font-size:14.5px;color:#b9b0a2;line-height:1.5}
+.index .item:hover{border-color:#d9bd8a}
+.index .item b{display:block;font-family:"Bodoni Moda",Georgia,serif;font-weight:400;font-size:20px;color:#fff;margin-bottom:4px}
+.index .n{font-family:"Bodoni Moda",Georgia,serif;color:#d9bd8a}
+@media (max-width:800px){.index .cols{grid-template-columns:1fr}}
+.foot{text-align:center;font-size:13px;color:#8d8577;padding:10px 0 30px}
+.foot p{margin:0}
+@media (max-width:520px){.top nav{display:none}}

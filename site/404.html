@@ -4,34 +4,32 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Page not found · Joenell Studio</title>
-<meta name="description" content="Joenell Studio is the home of Joenell's photography in Vancouver: weddings and engagements with Joenell Photography, with event photography coming soon.">
+<meta name="description" content="Joenell Studio is the home of Joenell's photography in Vancouver: weddings and engagements with Joenell Photography, and event photography coming soon. Flip through the magazine.">
 <link rel="canonical" href="https://joenellstudio.com/">
 <meta property="og:type" content="website"><meta property="og:site_name" content="Joenell Studio">
 <meta property="og:title" content="Joenell Studio · Photography in Vancouver, BC">
-<meta property="og:description" content="Weddings and engagements with Joenell Photography. Event photography coming soon.">
-<meta property="og:url" content="https://joenellstudio.com/"><meta property="og:image" content="https://joenellstudio.com/images/cl-wedding-path.jpg">
+<meta property="og:description" content="Flip through the Joenell Studio magazine: weddings by Joenell Photography, events coming soon.">
+<meta property="og:url" content="https://joenellstudio.com/"><meta property="og:image" content="https://joenellstudio.com/images/cl-wedding-kiss.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#14130f">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Jost:wght@300;400;500&display=swap">
-<link rel="stylesheet" href="/assets/studio.css?v=20261125a">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,700;1,6..96,400&family=Jost:wght@300;400;500&family=Pinyon+Script&display=swap">
+<link rel="preload" as="image" href="/images/cl-wedding-kiss.jpg">
+<link rel="stylesheet" href="/assets/flipbook.css?v=20261125m">
+<link rel="stylesheet" href="/assets/magazine.css?v=20261125m">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Joenell Studio","url":"https://joenellstudio.com/","areaServed":"Vancouver, British Columbia","subOrganization":{"@type":"LocalBusiness","name":"Joenell Photography","url":"https://www.joenellphotography.ca/","description":"Wedding and engagement photography in Vancouver, BC"}}</script>
 </head>
 <body>
 <header class="top">
   <a class="mark" href="/" aria-label="Joenell Studio home"><b>JOENELL</b><span>Studio</span></a>
-  <nav><a href="#work">Photography</a><a href="#about">About</a><a href="#contact">Contact</a></nav>
+  <nav><a href="https://www.joenellphotography.ca/">Weddings</a><a href="#" data-jump="14">Events</a><a href="#contact">Contact</a></nav>
 </header>
-
-<main><section class="hero" style="min-height:70svh"><div class="hero-copy"><p class="eyebrow">Page not found</p><h1 style="font-size:clamp(44px,7vw,84px)">This page <em>wandered off</em></h1><p class="lead">Let's get you back to the studio.</p><a class="btn light" href="/">Go to the homepage</a></div></section></main>
-
-<footer class="foot">
-  <div class="wrap foot-row">
-    <a class="mark" href="/"><b>JOENELL</b><span>Studio</span></a>
-    <p>© <span id="y">2026</span> Joenell Studio · Vancouver, BC · <a href="https://www.joenellphotography.ca/">joenellphotography.ca</a></p>
-  </div>
-</footer>
-<script>document.getElementById('y').textContent=new Date().getFullYear()</script>
+<main style="text-align:center;padding:12vh 20px"><p style="letter-spacing:.3em;text-transform:uppercase;color:#d9bd8a;font-size:12px">Page not found</p><h1 style="font-family:Bodoni Moda,Georgia,serif;font-weight:400;font-size:clamp(40px,7vw,72px);color:#fff;margin:.2em 0">This page wandered off</h1><p><a href="/" style="color:#d9bd8a">Back to the magazine</a></p></main>
+<footer class="foot"><p>© <span id="y">2026</span> Joenell Studio · Vancouver, BC</p></footer>
+<script>
+document.getElementById('y').textContent=new Date().getFullYear();
+document.querySelectorAll('[data-jump]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();const m=document.getElementById('mag');if(window.ALBUM.jump)window.ALBUM.jump(+a.dataset.jump);m.scrollIntoView({behavior:'smooth',block:'center'});}));
+</script>
 </body>
 </html>
